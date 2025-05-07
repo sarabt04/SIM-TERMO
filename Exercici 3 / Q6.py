@@ -53,9 +53,6 @@ def E_c(v):
 n_passes = 200000
 acceptat = 0
 
-pas_captura =1000  # Cada quantes passes volem que ens guardi les energies per després comparar i veure si s'estabilitza
-energies_totals = [] # Aquí emmagatzarem l'energia total del sistema després dels pas_captura
-
 for passes in range(n_passes):
    particula = np.random.randint(num_particules) # Triem una partícula aleatòria
    v_particula = v[particula].copy() # Important fer copy per evitar que canvii el valor de la llista inicial que hem generat i aixi que no afecti si el pas no ha estat acceptat.
@@ -75,11 +72,7 @@ for passes in range(n_passes):
        v[particula] = v_nova
        acceptat += 1
        # Si no es compleix la condició es manté la velocitat inicial
-       
-   if passes % pas_captura == 0: # % retorna el residu de la divisió; si és 0, vol dir que passes és divisible per pas_captura. Així guardem cada 1000 passes
-       energia_total = np.sum([E_c(vi) for vi in v])
-       energies_totals.append(energia_total)
-       
+
 # La Taxa d'acceptació hauria de ser 30-60% per a una exploració eficient de l'espai de fases
 print(f"Taxa d'acceptació: {acceptat / n_passes:.2f}")
 
@@ -120,41 +113,3 @@ plt.tick_params(axis='both', direction='out', which='both', top=True, right=True
 plt.tight_layout()
 
 plt.show()
-
-# Convergència de l'energia
-ratios = []
-
-for i in range(1, len(energies_totals)): # comencem per 1 que és el segon valor de la llista perquè si no no podem comparar després amb el pas anterior
-    E_1 = energies_totals[i-1]
-    E_2 = energies_totals[i]
-    ratios.append(E_2 / E_1)
-
-# L'eix X: de 0 a n_passes cada pas_captura (coincideix amb energies_totals)
-numero_de_passos = np.arange(pas_captura, n_passes + 1, pas_captura)[1:]  # Excloem el primer punt per coincidir amb len(ratios)
-
-plt.figure(figsize=(10, 4), dpi=500)
-plt.plot(numero_de_passos, ratios, '-', label=r'$E_i / E_{i-1}$')
-plt.axhline(1, color='red', linestyle='--', linewidth=1, label='1 (convergència)')
-plt.xlabel('Nombre de passos')
-plt.ylabel('Relació entre energies')
-plt.legend()
-plt.tight_layout()
-plt.show()
-
-# Cv = ( <E^2> - <E>^2 ) / k_B T^2
-ultims_valors = energies_totals[-100:]  # Agafem els últims 100 valors (reocordem que només en tenim 200000/1000 = 200) S'estabilitza a partir dels 100000 passos aprox --> agafar els últims 100000/1000 = 100 valors o menys
-ultims_array = np.array(ultims_valors) # Passem a array per facilitar càlculs
-mitjana_E = np.mean(ultims_array)
-mitjana_E2 = np.mean(ultims_array ** 2)
-fluctuacions = mitjana_E2 - mitjana_E**2
-
-Cv_simulat = fluctuacions / (k_B * T**2)
-
-# Cv teòric --> 1/2 d N k_B
-Cv_teoric = 0.5 * d * num_particules * k_B
-
-err_relatiu = np.abs(Cv_simulat-Cv_teoric)/Cv_teoric
-print(f"Cv simulat: {Cv_simulat}")
-print(f"Cv teoric: {Cv_teoric}")
-print(f"simulat / teoric: {Cv_simulat / Cv_teoric:.4f}") # Si ho hem fet bé ha de ser proper a 1
-print(f"Error relatiu: {err_relatiu}")
