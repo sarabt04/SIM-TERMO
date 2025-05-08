@@ -8,9 +8,6 @@ V=L**3
 mass = 4E-3/6E23            # helium mass
 k = 1.4E-23                 # Boltzmann constant
 T = 300                     # around room temperature
-# Bruce Sherwood
-win = 500
-Natoms = 500                #Fixat a 500 atoms
 Ratom = 0.03                # wildly exaggerated size of helium atom
 
 
