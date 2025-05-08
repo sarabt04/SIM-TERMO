@@ -149,7 +149,6 @@ P_teo = 0
 t_acum=[]
 P=[]
 P_teorica=[]
-T=[]
 info = wtext(text="Valors pressió\n")
 
 
@@ -288,7 +287,6 @@ while t_tot<0.01: #BUCLE Q ES REPETEIX INFINITAMENT PER ANAR ACTUALITZANT LA POS
     
     if nhisto % 10 == 0:
        P_teorica.append(P_teo)
-       T.append(T_inst)
        info.text = f"Temps total: {t_tot:.4f} s\nPressió simulada: {P_tot:.2e} s\nPressió teòrica: {P_teo:.2e} s"
 
 
@@ -297,13 +295,6 @@ plt.plot(t_acum,P, color='c', label='sim.(dHe)')
 plt.plot(t_acum, P_teorica, color='blue', label='teo.(dHe)')
 plt.xlabel(r't [s]')
 plt.ylabel(r'P [Pa]')
-plt.grid(True, which='both', ls='--', lw=0.5)
-plt.legend()
-plt.show()     
-
-plt.plot(t_acum,T, color='c', label='sim.(dHe)')
-plt.xlabel(r't [s]')
-plt.ylabel(r'T [K]')
 plt.grid(True, which='both', ls='--', lw=0.5)
 plt.legend()
 plt.show()     
