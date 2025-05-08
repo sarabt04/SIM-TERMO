@@ -139,7 +139,7 @@ diam=2*(31*10**(-12))
 c=3*10**8
 rho=0.1785
 T=2**(1/2)*np.pi*diam*c*rho
-print(T)
+info = wtext(text="Temps mitjà\n")
 
 while t_tot<0.025: #BUCLE Q ES REPETEIX INFINITAMENT PER ANAR ACTUALITZANT LA POSICIO I LA VELOCITAT DELS ATOMS
     rate(300)                                                                  #Fa q el bucle s'actualitzi max 300cops cada seg                
@@ -163,11 +163,11 @@ while t_tot<0.025: #BUCLE Q ES REPETEIX INFINITAMENT PER ANAR ACTUALITZANT LA PO
     xoc_tot+=xoc_it_i
     t_tot+=dt
     
-    if nhisto%100 == 0:
+    if nhisto%10 == 0:
         temps_mig_global = t_tot / xoc_tot
         print(f"Temps total simulat: {t_tot:.3f} s")
-        print(f"Xocs totals: {xoc_tot:.3f}")
         print(f"Temps mitjà entre col·lisions (global): {temps_mig_global:.2e} s")
+        info.text = f"Temps total: {t_tot:.3f} s\nTemps mitjà entre xocs: {temps_mig_global:.2e} s"
 
 
     # PER AQEULLES PAPRTICULES QUE HAN XOOCAT (elasticament) ACTUALITZEM ELS MOMENTS DELS 2 ATOMS
