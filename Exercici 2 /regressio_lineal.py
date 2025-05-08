@@ -15,7 +15,7 @@ mpl.rcParams['text.usetex'] = True
 mpl.rcParams['font.family'] = 'serif'
 mpl.rcParams['text.latex.preamble'] = r'\usepackage{amsmath}'
 
-# DADES
+# DADES (els càlculs dels ln els hem fet a l'excel, aqui ja només agafem el resultat)
 x = [-0.83876, -0.93039, -1.03129, -1.14351, -1.26994, -1.4147, -1.58403, -1.78798, -2.04448, -2.39035, -2.92346, -4.14162]
 y = [-0.23319, -0.25231, -0.27575, -0.30788, -0.35098, -0.39899, -0.45571, -0.543, -0.63111, -0.75502, -0.93395, -1.28013]
 
